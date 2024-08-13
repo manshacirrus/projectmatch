@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Resume and Project Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Upload Resume and Project Data</h1>
+    
+    <!-- Resume Upload Form -->
+    <form action="/" method="post" enctype="multipart/form-data">
+        <h2>Upload Resume</h2>
+        <input type="file" name="resume" accept=".pdf,.docx">
+        <input type="submit" value="Upload Resume">
+    </form>
+    
+    <!-- Project Upload Form -->
+    <form action="/" method="post">
+        <h2>Upload Project Data</h2>
+        <label for="project_name">Project Name:</label>
+        <input type="text" name="project_name" id="project_name" required>
+        <br>
+        <label for="project_description">Project Description:</label>
+        <textarea name="project_description" id="project_description" rows="4" cols="50" required></textarea>
+        <br>
+        <label for="project_skills">Required Skills (comma-separated):</label>
+        <input type="text" name="project_skills" id="project_skills" required>
+        <br>
+        <input type="submit" value="Upload Project Data">
+    </form>
+    
+    <!-- Display flash messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Display suggested projects -->
+    {% if suggested_projects %}
+        <h2>Suggested Projects Based on Your Skills:</h2>
+        <ul>
+            {% for project in suggested_projects %}
+                <li>
+                    <h3>{{ project.name }}</h3>
+                    <p>{{ project.description }}</p>
+                    <p><strong>Skills Required:</strong> {{ project.skills_required | join(', ') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

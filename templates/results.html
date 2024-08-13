@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Recommendations Based on Your Skills</h1>
+        <h2>Extracted Skills:</h2>
+        <ul>
+            {% for skill in skills %}
+            <li>{{ skill }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Recommended Projects/Roles:</h2>
+        <ul>
+            {% for project, score in recommendations %}
+            <li>{{ project }} - Match Score: {{ score|round(2) }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('index') }}">Upload Another Resume</a>
+    </div>
+</body>
+</html>
